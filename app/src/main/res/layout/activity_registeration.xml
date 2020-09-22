@@ -3,32 +3,78 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
     android:layout_height="match_parent"
     tools:context=".activity.Registeration">
 
     <TextView
-        android:id="@+id/logo_Tv"
+        android:id="@+id/registration_text_logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="casual"
         android:text="Tribune"
         android:textAlignment="center"
         android:textSize="38sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/registration_guideline_35"/>
 
     <EditText
+        android:id="@+id/registration_edtxt_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/username_Etxt"
         android:hint="Enter your name"
-        app:layout_constraintTop_toBottomOf="@id/logo_Tv"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        android:textAlignment="center"/>
+        app:layout_constraintTop_toBottomOf="@id/registration_guideline_35" />
 
+    <EditText
+        android:id="@+id/registration_edtxt_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your password"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registration_edtxt_username" />
 
+    <EditText
+        android:id="@+id/registration_edtxt_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm password"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registration_edtxt_password" />
 
+    <Button
+        android:id="@+id/registration_btn_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registration_edtxt_confirm" />
 
+    <Button
+        android:id="@+id/registration_btn_have_account"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already have account?"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registration_btn_register" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/registration_guideline_35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
