@@ -9,14 +9,14 @@
     tools:context=".activity.Login">
 
     <TextView
-        android:id="@+id/registration_text_logo"
+        android:id="@+id/login_text_logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="casual"
         android:text="Tribune"
         android:textAlignment="center"
         android:textSize="38sp"
-        app:layout_constraintBottom_toTopOf="@id/registration_guideline_35"
+        app:layout_constraintBottom_toTopOf="@id/login_guideline_35"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +27,7 @@
         android:hint="Enter your name"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/registration_guideline_35" />
+        app:layout_constraintTop_toBottomOf="@id/login_guideline_35" />
 
     <EditText
         android:id="@+id/login_edtxt_password"
@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@id/login_edtxt_username" />
 
     <Button
-        android:id="@+id/login_btn_login"
+        android:id="@+id/login_btn_register"
         style="@style/TextAppearance.AppCompat.Widget.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@id/login_edtxt_password" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/registration_guideline_35"
+        android:id="@+id/login_guideline_35"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
