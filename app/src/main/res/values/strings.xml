@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Social App</string>
     <string name="login">Login</string>
-    <string name="registration">registration</string>
+    <string name="registration">Registration</string>
     <string name="enter_login">Enter login</string>
     <string name="enter_password">Enter password</string>
     <string name="success">Success</string>

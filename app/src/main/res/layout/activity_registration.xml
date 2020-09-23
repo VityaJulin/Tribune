@@ -7,6 +7,18 @@
     android:padding="48dp"
     tools:context="MainActivity">
 
+    <TextView
+        android:id="@+id/til_registration_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tribune"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="36dp"
+        app:layout_constraintBottom_toTopOf="@id/til_registration_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_registration_login"
         android:layout_width="0dp"
