@@ -70,7 +70,7 @@ class FeedActivity : AppCompatActivity(),
         }
     }
 
-    override fun onRepostBtnClicked(item: PostModel, position: Int) {
+    override fun onDislikeBtnClicked(item: PostModel, position: Int) {
         lifecycleScope.launch {
             item.dislikeActionPerforming = true
             with(container) {

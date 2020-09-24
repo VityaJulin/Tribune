@@ -82,7 +82,7 @@ class PostAdapter(val list: MutableList<PostModel>) :
     }
 
     interface OnRepostBtnClickListener {
-        fun onRepostBtnClicked(item: PostModel, position: Int)
+        fun onDislikeBtnClicked(item: PostModel, position: Int)
     }
 }
 
@@ -109,7 +109,7 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
                         context.toast("Can't repost repost)")
                     } else {
                         showDialog(context) {
-                            adapter.repostBtnClickListener?.onRepostBtnClicked(
+                            adapter.repostBtnClickListener?.onDislikeBtnClicked(
                                 item,
                                 currentPosition
                             )
@@ -172,7 +172,7 @@ class RepostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.View
                         context.toast("Can't repost repost)")
                     } else {
                         showDialog(context) {
-                            adapter.repostBtnClickListener?.onRepostBtnClicked(
+                            adapter.repostBtnClickListener?.onDislikeBtnClicked(
                                 item,
                                 currentPosition
                             )
