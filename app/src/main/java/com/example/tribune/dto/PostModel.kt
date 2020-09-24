@@ -20,14 +20,14 @@ data class PostModel(
     var content: String? = null,
     var likes: Int = 0,
     var likedByMe: Boolean = false,
-    var reposts: Int = 0,
-    var repostedByMe: Boolean = false,
+    var dislikes: Int = 0,
+    var dislikedByMe: Boolean = false,
     val link: String? = null,
     val type: PostType = PostType.POST,
     val attachment: AttachmentModel?
 ) {
     var likeActionPerforming = false
-    var repostActionPerforming = false
+    var dislikeActionPerforming = false
 
     fun updateLikes(updatedModel: PostModel) {
         if (id != updatedModel.id) throw IllegalAccessException("Ids are different")
@@ -40,7 +40,7 @@ data class PostModel(
         likes = updatedModel.likes
         likedByMe = updatedModel.likedByMe
         content = updatedModel.content
-        reposts = updatedModel.reposts
-        repostedByMe = updatedModel.repostedByMe
+        dislikes = updatedModel.dislikes
+        dislikedByMe = updatedModel.dislikedByMe
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Social App</string>
+    <string name="app_name">Tribune</string>
     <string name="login">Login</string>
     <string name="registration">Registration</string>
     <string name="enter_login">Enter login</string>

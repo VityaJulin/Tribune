@@ -72,7 +72,7 @@ class FeedActivity : AppCompatActivity(),
 
     override fun onRepostBtnClicked(item: PostModel, position: Int) {
         lifecycleScope.launch {
-            item.repostActionPerforming = true
+            item.dislikeActionPerforming = true
             with(container) {
                 adapter?.notifyItemChanged(position)
                 val response = Repository.repostedByMe(item.id)

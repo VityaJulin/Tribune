@@ -101,11 +101,11 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
                     }
                 }
             }
-            repostBtn.setOnClickListener {
+            statisticBtn.setOnClickListener {
                 val currentPosition = adapterPosition
                 if (currentPosition != RecyclerView.NO_POSITION) {
                     val item = adapter.list[adapterPosition - 1]
-                    if (item.repostedByMe) {
+                    if (item.dislikedByMe) {
                         context.toast("Can't repost repost)")
                     } else {
                         showDialog(context) {
@@ -125,26 +125,26 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
             authorTv.text = post.ownerName
             contentTv.text = post.content
             likesTv.text = post.likes.toString()
-            repostsTv.text = post.reposts.toString()
+            dislikesTv.text = post.dislikes.toString()
 
             if (post.likeActionPerforming) {
-                likeBtn.setImageResource(R.drawable.ic_favorite_pending_24dp)
+                likeBtn.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)
             } else if (post.likedByMe) {
-                likeBtn.setImageResource(R.drawable.ic_favorite_active_24dp)
-                likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
+                likeBtn.setImageResource(R.drawable.ic_baseline_thumb_up_for_me_alt_24)
+                likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorGreen))
             } else {
-                likeBtn.setImageResource(R.drawable.ic_favorite_inactive_24dp)
+                likeBtn.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)
                 likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorBrown))
             }
 
-            if (post.repostActionPerforming) {
-                repostBtn.setImageResource(R.drawable.ic_reposts_pending)
-            } else if (post.repostedByMe) {
-                repostBtn.setImageResource(R.drawable.ic_reposts_active)
-                repostsTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
+            if (post.dislikeActionPerforming) {
+                statisticBtn.setImageResource(R.drawable.ic_baseline_thumb_down_alt_24)
+            } else if (post.dislikedByMe) {
+                statisticBtn.setImageResource(R.drawable.ic_baseline_thumb_down_for_me_alt_24)
+                dislikesTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
             } else {
-                repostBtn.setImageResource(R.drawable.ic_reposts_inactive)
-                repostsTv.setTextColor(ContextCompat.getColor(context, R.color.colorBrown))
+                statisticBtn.setImageResource(R.drawable.ic_baseline_thumb_down_alt_24)
+                dislikesTv.setTextColor(ContextCompat.getColor(context, R.color.colorBrown))
             }
         }
     }
@@ -164,11 +164,11 @@ class RepostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.View
                     }
                 }
             }
-            repostBtn.setOnClickListener {
+            statisticBtn.setOnClickListener {
                 val currentPosition = adapterPosition
                 if (currentPosition != RecyclerView.NO_POSITION) {
                     val item = adapter.list[adapterPosition]
-                    if (item.repostedByMe) {
+                    if (item.dislikedByMe) {
                         context.toast("Can't repost repost)")
                     } else {
                         showDialog(context) {
@@ -188,26 +188,26 @@ class RepostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.View
             authorTv.text = post.ownerName
             contentTv.text = post.content
             likesTv.text = post.likes.toString()
-            repostsTv.text = post.reposts.toString()
+            dislikesTv.text = post.dislikes.toString()
 
             if (post.likeActionPerforming) {
-                likeBtn.setImageResource(R.drawable.ic_favorite_pending_24dp)
+                likeBtn.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)
             } else if (post.likedByMe) {
-                likeBtn.setImageResource(R.drawable.ic_favorite_active_24dp)
-                likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
+                likeBtn.setImageResource(R.drawable.ic_baseline_thumb_up_for_me_alt_24)
+                likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorGreen))
             } else {
-                likeBtn.setImageResource(R.drawable.ic_favorite_inactive_24dp)
+                likeBtn.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)
                 likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorBrown))
             }
 
-            if (post.repostActionPerforming) {
-                repostBtn.setImageResource(R.drawable.ic_reposts_pending)
-            } else if (post.repostedByMe) {
-                repostBtn.setImageResource(R.drawable.ic_reposts_active)
-                repostsTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
+            if (post.dislikeActionPerforming) {
+                statisticBtn.setImageResource(R.drawable.ic_baseline_thumb_down_alt_24)
+            } else if (post.dislikedByMe) {
+                statisticBtn.setImageResource(R.drawable.ic_baseline_thumb_down_for_me_alt_24)
+                dislikesTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
             } else {
-                repostBtn.setImageResource(R.drawable.ic_reposts_inactive)
-                repostsTv.setTextColor(ContextCompat.getColor(context, R.color.colorBrown))
+                statisticBtn.setImageResource(R.drawable.ic_baseline_thumb_down_alt_24)
+                dislikesTv.setTextColor(ContextCompat.getColor(context, R.color.colorBrown))
             }
         }
     }

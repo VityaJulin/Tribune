@@ -49,6 +49,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:maxLength="100"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +67,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/likesTv"
         app:layout_constraintTop_toBottomOf="@+id/contentTv"
-        app:srcCompat="@drawable/ic_favorite_inactive_24dp" />
+        app:srcCompat="@drawable/ic_baseline_thumb_up_alt_24" />
 
     <TextView
         android:id="@+id/likesTv"
@@ -75,53 +76,42 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="0"
-        android:textColor="#ff0000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/commentBtn"
+        app:layout_constraintEnd_toStartOf="@id/dislikeBtn"
         app:layout_constraintTop_toBottomOf="@+id/contentTv" />
 
     <ImageButton
-        android:id="@+id/commentBtn"
+        android:id="@+id/dislikeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/commentsTv"
+        app:layout_constraintEnd_toStartOf="@+id/dislikesTv"
         app:layout_constraintTop_toBottomOf="@+id/contentTv"
-        app:srcCompat="@drawable/ic_comments_inactive_24dp" />
+        app:srcCompat="@drawable/ic_baseline_thumb_down_alt_24" />
 
     <TextView
-        android:id="@+id/commentsTv"
+        android:id="@+id/dislikesTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/repostBtn"
+        app:layout_constraintEnd_toStartOf="@id/statisticBtn"
         app:layout_constraintTop_toBottomOf="@+id/contentTv"
-        tools:text="8" />
+        tools:text="0" />
 
     <ImageButton
-        android:id="@+id/repostBtn"
+        android:id="@+id/statisticBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/repostsTv"
-        app:layout_constraintTop_toBottomOf="@+id/contentTv"
-        app:srcCompat="@drawable/ic_reposts_inactive" />
-
-    <TextView
-        android:id="@+id/repostsTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contentTv"
-        tools:text="2" />
+        app:srcCompat="@drawable/ic_baseline_thumbs_up_down_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
