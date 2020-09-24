@@ -22,6 +22,10 @@ class FeedActivity : AppCompatActivity(),
         fab.setOnClickListener {
             start<CreatePostActivity>()
         }
+
+        /*swipeContainer.setOnRefreshListener {
+            refreshData()
+        }*/
     }
 
     override fun onStart() {
@@ -83,4 +87,17 @@ class FeedActivity : AppCompatActivity(),
             }
         }
     }
+
+
+    /*private fun refreshData() {
+        lifecycleScope.launch {
+            with(container) {
+                val newData = Repository.getRecent()
+                swipeContainer.isRefreshing = false
+                if (newData.isSuccessful) {
+                    adapter?.newRecentPosts(newData.body()!!)
+                }
+            }
+        }
+    }*/
 }

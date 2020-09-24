@@ -55,4 +55,8 @@ interface API {
 
     @GET("api/v1/posts/recent/before/{id}")
     suspend fun getPostsBefore(@Path("id") id: Long): Response<List<PostModel>>
+
+    @GET("api/v1/posts/recent")
+    suspend fun getRecent(): Response<List<PostModel>>
+
 }

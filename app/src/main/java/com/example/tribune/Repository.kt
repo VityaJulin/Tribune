@@ -70,4 +70,6 @@ object Repository {
 
     suspend fun getPostsBefore(id: Long) = API.getPostsBefore(id)
 
+    suspend fun getRecent() = API.getRecent()
+
 }
