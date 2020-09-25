@@ -13,7 +13,7 @@ import splitties.activities.start
 import splitties.toast.toast
 
 class FeedActivity : AppCompatActivity(),
-    PostAdapter.OnLikeBtnClickListener, PostAdapter.OnRepostBtnClickListener {
+    PostAdapter.OnLikeBtnClickListener, PostAdapter.OnDislikeBtnClickListener {
     private var dialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,12 +60,13 @@ class FeedActivity : AppCompatActivity(),
             item.likeActionPerforming = true
             with(container) {
                 adapter?.notifyItemChanged(position)
-                val response = if (item.likedByMe) {
-                    Repository.cancelMyLike(item.id)
+                if (item.likedByMe || item.dislikedByMe) {
+                    toast(R.string.error_double_vote)
                 } else {
                     Repository.likedByMe(item.id)
                 }
                 item.likeActionPerforming = false
+                val response = Repository.likedByMe(item.id)
                 if (response.isSuccessful) {
                     item.updateLikes(response.body()!!)
                 }
@@ -79,9 +80,15 @@ class FeedActivity : AppCompatActivity(),
             item.dislikeActionPerforming = true
             with(container) {
                 adapter?.notifyItemChanged(position)
-                val response = Repository.repostedByMe(item.id)
+                if (item.likedByMe || item.dislikedByMe) {
+                    toast(R.string.error_double_vote)
+                } else {
+                    Repository.dislikedByMe(item.id)
+                }
+                item.likeActionPerforming = false
+                val response = Repository.dislikedByMe(item.id)
                 if (response.isSuccessful) {
-                    item.updatePost(response.body()!!)
+                    item.updateDislikes(response.body()!!)
                 }
                 adapter?.notifyItemChanged(position)
             }

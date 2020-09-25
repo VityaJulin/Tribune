@@ -35,6 +35,13 @@ data class PostModel(
         likedByMe = updatedModel.likedByMe
     }
 
+    fun updateDislikes(updatedModel: PostModel) {
+        if (id != updatedModel.id) throw IllegalAccessException("Ids are different")
+        dislikes = updatedModel.dislikes
+        dislikedByMe = updatedModel.dislikedByMe
+    }
+
+
     fun updatePost(updatedModel: PostModel) {
         if (id != updatedModel.id) throw IllegalAccessException("Ids are different")
         likes = updatedModel.likes

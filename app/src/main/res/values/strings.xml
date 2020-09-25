@@ -22,4 +22,6 @@
     <string name="like_in_progress">Like is performing</string>
     <string name="load_new_posts">load_new_posts</string>
     <string name="load_more_posts">load_more_posts</string>
+    <string name="error_double_vote">You can vote only once!</string>
+    <string name="dislike_is_progress">Dislike is performing</string>
 </resources>

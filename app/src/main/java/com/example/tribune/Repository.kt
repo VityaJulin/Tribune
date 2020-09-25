@@ -72,4 +72,6 @@ object Repository {
 
     suspend fun getRecent() = API.getRecent()
 
+    suspend fun  dislikedByMe(id: Long) = API.dislikedByMe(id)
+
 }

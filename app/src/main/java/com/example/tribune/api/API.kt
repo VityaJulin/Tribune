@@ -59,4 +59,7 @@ interface API {
     @GET("api/v1/posts/recent")
     suspend fun getRecent(): Response<List<PostModel>>
 
+    @POST("api/v1/posts/{id}/dislikes")
+    suspend fun dislikedByMe(@Path("id") id: Long): Response<PostModel>
+
 }
