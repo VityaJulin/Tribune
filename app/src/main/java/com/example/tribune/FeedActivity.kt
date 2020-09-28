@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.adapter.PostAdapter
 import kotlinx.android.synthetic.main.activity_feed.*
-import kotlinx.android.synthetic.main.activity_feed.container
-import kotlinx.android.synthetic.main.activity_feed.view.*
 import kotlinx.coroutines.launch
 import splitties.activities.start
 import splitties.toast.toast
@@ -101,12 +99,10 @@ class FeedActivity : AppCompatActivity(),
 
     private fun refreshData() {
         lifecycleScope.launch {
-            with(container) {
-                val newData = Repository.getRecent()
-                swipeContainer.isRefreshing = false
-                if (newData.isSuccessful) {
-                    adapter?.newRecentPosts(newData.body()!!)
-                }
+            val newData = Repository.getRecent()
+            swipeContainer.isRefreshing = false
+            if (newData.isSuccessful) {
+                container.adapter?.newRecentPosts(newData.body()!!)
             }
         }
     }
