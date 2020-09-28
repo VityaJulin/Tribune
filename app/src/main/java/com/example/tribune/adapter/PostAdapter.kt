@@ -53,6 +53,7 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
                     }
                 }
             }
+
             dislikeBtn.setOnClickListener {
                 val currentPosition = adapterPosition
                 if (currentPosition != RecyclerView.NO_POSITION) {
@@ -61,7 +62,6 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
                         context.toast(R.string.dislike_is_progress)
                     } else {
                         adapter.dislikeBtnClickListener?.onDislikeBtnClicked(item, currentPosition)
-
                     }
                 }
             }

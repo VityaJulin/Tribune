@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.adapter.PostAdapter
 import kotlinx.android.synthetic.main.activity_feed.*
+import kotlinx.android.synthetic.main.activity_feed.container
+import kotlinx.android.synthetic.main.activity_feed.view.*
 import kotlinx.coroutines.launch
 import splitties.activities.start
 import splitties.toast.toast
@@ -23,9 +25,9 @@ class FeedActivity : AppCompatActivity(),
             start<CreatePostActivity>()
         }
 
-        /*swipeContainer.setOnRefreshListener {
+        swipeContainer.setOnRefreshListener {
             refreshData()
-        }*/
+        }
     }
 
     override fun onStart() {
@@ -47,6 +49,7 @@ class FeedActivity : AppCompatActivity(),
                         (result.body() ?: emptyList()) as MutableList<PostModel>
                     ).apply {
                         likeBtnClickListener = this@FeedActivity
+                        dislikeBtnClickListener = this@FeedActivity
                     }
                 }
             } else {
@@ -96,7 +99,7 @@ class FeedActivity : AppCompatActivity(),
     }
 
 
-    /*private fun refreshData() {
+    private fun refreshData() {
         lifecycleScope.launch {
             with(container) {
                 val newData = Repository.getRecent()
@@ -106,5 +109,9 @@ class FeedActivity : AppCompatActivity(),
                 }
             }
         }
-    }*/
+    }
+}
+
+private fun Any?.newRecentPosts(list: List<PostModel>) {
+    TODO("Not yet implemented")
 }
