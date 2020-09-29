@@ -22,7 +22,6 @@ class FeedActivity : AppCompatActivity(),
         fab.setOnClickListener {
             start<CreatePostActivity>()
         }
-
         swipeContainer.setOnRefreshListener {
             refreshData()
         }
@@ -102,12 +101,9 @@ class FeedActivity : AppCompatActivity(),
             val newData = Repository.getRecent()
             swipeContainer.isRefreshing = false
             if (newData.isSuccessful) {
-                container.adapter?.newRecentPosts(newData.body()!!)
+                container.adapter = PostAdapter(newData.body()!! as MutableList<PostModel>)
+                container.adapter?.notifyDataSetChanged()
             }
         }
     }
-}
-
-private fun Any?.newRecentPosts(list: List<PostModel>) {
-    TODO("Not yet implemented")
 }
