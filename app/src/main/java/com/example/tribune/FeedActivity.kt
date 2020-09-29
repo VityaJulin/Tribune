@@ -64,13 +64,13 @@ class FeedActivity : AppCompatActivity(),
                     toast(R.string.error_double_vote)
                 } else {
                     Repository.likedByMe(item.id)
+                    val response = Repository.likedByMe(item.id)
+                    if (response.isSuccessful) {
+                        item.updateLikes(response.body()!!)
+                    }
+                    adapter?.notifyItemChanged(position)
                 }
                 item.likeActionPerforming = false
-                val response = Repository.likedByMe(item.id)
-                if (response.isSuccessful) {
-                    item.updateLikes(response.body()!!)
-                }
-                adapter?.notifyItemChanged(position)
             }
         }
     }
@@ -84,13 +84,13 @@ class FeedActivity : AppCompatActivity(),
                     toast(R.string.error_double_vote)
                 } else {
                     Repository.dislikedByMe(item.id)
+                    val response = Repository.dislikedByMe(item.id)
+                    if (response.isSuccessful) {
+                        item.updateDislikes(response.body()!!)
+                        adapter?.notifyItemChanged(position)
+                    }
                 }
-                item.likeActionPerforming = false
-                val response = Repository.dislikedByMe(item.id)
-                if (response.isSuccessful) {
-                    item.updateDislikes(response.body()!!)
-                }
-                adapter?.notifyItemChanged(position)
+                item.dislikeActionPerforming = false
             }
         }
     }
