@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.R
+import com.example.tribune.getTimeAgo
 import kotlinx.android.synthetic.main.item_post.view.*
 import splitties.toast.toast
 
@@ -74,6 +75,7 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
             contentTv.text = post.content
             likesTv.text = post.likes.toString()
             dislikesTv.text = post.dislikes.toString()
+            createdTv.text = getTimeAgo(post.created)
 
             if (post.likeActionPerforming) {
                 likeBtn.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)
