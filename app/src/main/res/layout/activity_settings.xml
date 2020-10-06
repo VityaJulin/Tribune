@@ -3,7 +3,91 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.Settings">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:background="#ffffff"
+    android:padding="16dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <ImageView
+        android:id="@+id/avatarIv"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_avatar_48dp"
+        tools:srcCompat="@drawable/ic_avatar_48dp" />
+
+    <TextView
+        android:id="@+id/authorTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@id/avatarIv"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Netology" />
+
+    <TextView
+        android:id="@+id/badgeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintStart_toEndOf="@id/avatarIv"
+        app:layout_constraintTop_toBottomOf="@id/authorTv"
+        tools:text="Author" />
+
+    <ImageView
+        android:id="@+id/image_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/likesTv"
+        app:layout_constraintTop_toBottomOf="@id/authorTv"
+        app:srcCompat="@drawable/ic_baseline_thumb_up_alt_24" />
+
+    <TextView
+        android:id="@+id/likesTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/image_dislike"
+        app:layout_constraintTop_toBottomOf="@id/authorTv" />
+
+    <ImageView
+        android:id="@+id/image_dislike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dislikesTv"
+        app:layout_constraintTop_toBottomOf="@id/authorTv"
+        app:srcCompat="@drawable/ic_baseline_thumb_down_alt_24" />
+
+    <TextView
+        android:id="@+id/dislikesTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/authorTv"
+        tools:text="0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
