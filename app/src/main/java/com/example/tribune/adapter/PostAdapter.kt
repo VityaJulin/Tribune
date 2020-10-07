@@ -16,6 +16,7 @@ class PostAdapter(val list: MutableList<PostModel>) :
 
     var likeBtnClickListener: OnLikeBtnClickListener? = null
     var dislikeBtnClickListener: OnDislikeBtnClickListener? = null
+    var avatarBtnClickListener: OnAvatarBtnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val postView =
@@ -37,6 +38,10 @@ class PostAdapter(val list: MutableList<PostModel>) :
 
     interface OnDislikeBtnClickListener {
         fun onDislikeBtnClicked(item: PostModel, position: Int)
+    }
+
+    interface OnAvatarBtnClickListener {
+        fun onAvatarBtnClicked(item: PostModel, position: Int)
     }
 }
 
@@ -66,6 +71,14 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
                     }
                 }
             }
+
+            avatarBtn_item.setOnClickListener {
+                val currentPosition = adapterPosition
+                if (currentPosition != RecyclerView.NO_POSITION) {
+                    val item = adapter.list[adapterPosition]
+                    adapter.avatarBtnClickListener?.onAvatarBtnClicked(item, currentPosition)
+                }
+            }
         }
     }
 
@@ -76,6 +89,7 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
             likesTv.text = post.likes.toString()
             dislikesTv.text = post.dislikes.toString()
             createdTv.text = getTimeAgo(post.created)
+            avatarBtn_item.setImageResource(R.drawable.ic_avatar_48dp)
 
             if (post.likeActionPerforming) {
                 likeBtn.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)

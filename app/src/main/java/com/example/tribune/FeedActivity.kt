@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_krud_app.dto.PostModel
+import com.example.tribune.activity.AuthorPage
 import com.example.tribune.adapter.PostAdapter
 import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.coroutines.launch
@@ -13,7 +14,8 @@ import splitties.activities.start
 import splitties.toast.toast
 
 class FeedActivity : AppCompatActivity(),
-    PostAdapter.OnLikeBtnClickListener, PostAdapter.OnDislikeBtnClickListener {
+    PostAdapter.OnLikeBtnClickListener, PostAdapter.OnDislikeBtnClickListener,
+    PostAdapter.OnAvatarBtnClickListener {
     private var dialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,6 +97,12 @@ class FeedActivity : AppCompatActivity(),
         }
     }
 
+    override fun onAvatarBtnClicked(item: PostModel, position: Int) {
+        lifecycleScope.launch {
+            toast("Click!")
+            start<AuthorPage>()
+        }
+    }
 
     private fun refreshData() {
         lifecycleScope.launch {
