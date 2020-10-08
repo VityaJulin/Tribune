@@ -49,6 +49,7 @@ class FeedActivity : AppCompatActivity(),
                     ).apply {
                         likeBtnClickListener = this@FeedActivity
                         dislikeBtnClickListener = this@FeedActivity
+                        avatarBtnClickListener = this@FeedActivity
                     }
                 }
             } else {
