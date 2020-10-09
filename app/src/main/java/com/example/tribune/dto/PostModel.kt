@@ -1,11 +1,17 @@
 package com.example.android_krud_app.dto
 
+import com.example.tribune.BASE_URL
+import com.example.tribune.dto.UserModel
+
 
 enum class AttachmentType {
     IMAGE, AUDIO, VIDEO
 }
 
-data class AttachmentModel(val id: String, val url: String, val type: AttachmentType)
+data class AttachmentModel(val id: String, val type: AttachmentType) {
+    val url
+        get() = "$BASE_URL/api/v1/static/$id"
+}
 
 enum class PostType {
     POST, REPOST
@@ -16,6 +22,7 @@ data class PostModel(
     val source: PostModel? = null,
     val ownerId: Long,
     val ownerName: String,
+    val author: UserModel,
     val created: Int,
     var content: String? = null,
     var likes: Int = 0,

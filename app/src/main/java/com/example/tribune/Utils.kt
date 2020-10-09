@@ -4,6 +4,8 @@ package com.example.tribune
  * Minimum is 6 chars. Should be at least one capital letter. Allow only english characters and
  * numbers
  */
+const val BASE_URL = "https://android-krud-api.herokuapp.com/"
+
 fun isValid(password: String) =
     password.isNotEmpty()
 
