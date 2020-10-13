@@ -15,7 +15,7 @@ import splitties.toast.toast
 
 class FeedActivity : AppCompatActivity(),
     PostAdapter.OnLikeBtnClickListener, PostAdapter.OnDislikeBtnClickListener,
-    PostAdapter.OnAvatarBtnClickListener {
+    PostAdapter.OnAvatarBtnClickListener, PostAdapter.OnStatisticBtnClicklistener {
     private var dialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +50,7 @@ class FeedActivity : AppCompatActivity(),
                         likeBtnClickListener = this@FeedActivity
                         dislikeBtnClickListener = this@FeedActivity
                         avatarBtnClickListener = this@FeedActivity
+                        statisticBtnClickListener = this@FeedActivity
                     }
                 }
             } else {
@@ -103,6 +104,10 @@ class FeedActivity : AppCompatActivity(),
             toast("Click!")
             start<AuthorPage>()
         }
+    }
+
+    override fun onStatisticBtnCliked(item: PostModel, position: Int) {
+        toast("click2!")
     }
 
     private fun refreshData() {

@@ -17,6 +17,7 @@ class PostAdapter(val list: MutableList<PostModel>) :
     var likeBtnClickListener: OnLikeBtnClickListener? = null
     var dislikeBtnClickListener: OnDislikeBtnClickListener? = null
     var avatarBtnClickListener: OnAvatarBtnClickListener? = null
+    var statisticBtnClickListener: OnStatisticBtnClicklistener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val postView =
@@ -42,6 +43,10 @@ class PostAdapter(val list: MutableList<PostModel>) :
 
     interface OnAvatarBtnClickListener {
         fun onAvatarBtnClicked(item: PostModel, position: Int)
+    }
+
+    interface OnStatisticBtnClicklistener {
+        fun onStatisticBtnCliked(item: PostModel, position: Int)
     }
 }
 
@@ -77,6 +82,14 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
                 if (currentPosition != RecyclerView.NO_POSITION) {
                     val item = adapter.list[adapterPosition]
                     adapter.avatarBtnClickListener?.onAvatarBtnClicked(item, currentPosition)
+                }
+            }
+
+            statisticBtn.setOnClickListener {
+                val currentPosition = adapterPosition
+                if (currentPosition != RecyclerView.NO_POSITION) {
+                    val item = adapter.list[adapterPosition]
+                    adapter.statisticBtnClickListener?.onStatisticBtnCliked(item, currentPosition)
                 }
             }
         }
