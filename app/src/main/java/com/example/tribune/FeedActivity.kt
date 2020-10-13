@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.activity.AuthorPage
+import com.example.tribune.activity.Statistic
 import com.example.tribune.adapter.PostAdapter
 import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.coroutines.launch
@@ -108,6 +109,7 @@ class FeedActivity : AppCompatActivity(),
 
     override fun onStatisticBtnCliked(item: PostModel, position: Int) {
         toast("click2!")
+        start<Statistic>()
     }
 
     private fun refreshData() {
