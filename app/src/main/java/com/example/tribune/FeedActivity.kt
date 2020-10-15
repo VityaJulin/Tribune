@@ -1,6 +1,7 @@
 package com.example.tribune
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -102,14 +103,14 @@ class FeedActivity : AppCompatActivity(),
 
     override fun onAvatarBtnClicked(item: PostModel, position: Int) {
         lifecycleScope.launch {
-            toast("Click!")
             start<AuthorPage>()
         }
     }
 
     override fun onStatisticBtnCliked(item: PostModel, position: Int) {
-        toast("click2!")
-        start<Statistic>()
+        lifecycleScope.launch {
+            start<Statistic>()
+        }
     }
 
     private fun refreshData() {

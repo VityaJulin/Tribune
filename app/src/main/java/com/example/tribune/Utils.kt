@@ -1,5 +1,7 @@
 package com.example.tribune
 
+import android.content.Intent
+
 /**
  * Minimum is 6 chars. Should be at least one capital letter. Allow only english characters and
  * numbers
@@ -28,3 +30,11 @@ fun getTimeAgo(create: Int): String {
         }
     }
 }
+
+const val USER_ID_DEFAULT_VALUE = 0L
+private const val USER_ID_KEY = "userId"
+var Intent.userId
+    get() = getLongExtra(USER_ID_KEY, USER_ID_DEFAULT_VALUE)
+    set(value) {
+        putExtra(USER_ID_KEY, value)
+    }

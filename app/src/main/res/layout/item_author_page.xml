@@ -11,18 +11,27 @@
     android:padding="16dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:context=".activity.AuthorPage">
+    app:layout_constraintTop_toTopOf="parent">
 
-    <ImageButton
-        android:id="@+id/avatarBtn_author"
+    <ImageView
+        android:id="@+id/avatarBtn_item"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_avatar_48dp"
-        tools:srcCompat="@drawable/ic_avatar_48dp" />
+        app:srcCompat="@drawable/ic_avatar_48dp" />
+
+    <TextView
+        android:id="@+id/createdTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="#999999"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@id/avatarBtn_item"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="5 минут назад" />
 
     <TextView
         android:id="@+id/authorTv"
@@ -30,31 +39,34 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Netology"
         android:textColor="@android:color/black"
-        app:layout_constraintStart_toEndOf="@id/avatarBtn_author"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/avatarBtn_item"
+        app:layout_constraintTop_toBottomOf="@id/createdTv"
+        tools:text="Netology" />
 
     <TextView
-        android:id="@+id/badgeTv"
-        android:layout_width="wrap_content"
+        android:id="@+id/contentTv"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Author"
-        android:textColor="@android:color/darker_gray"
-        app:layout_constraintStart_toEndOf="@id/avatarBtn_author"
-        app:layout_constraintTop_toBottomOf="@id/authorTv" />
+        android:maxLength="100"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/avatarBtn_item"
+        tools:text="First post in our network!" />
 
-    <ImageView
-        android:id="@+id/image_like"
+    <ImageButton
+        android:id="@+id/likeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/likesTv"
-        app:layout_constraintTop_toBottomOf="@id/authorTv"
+        app:layout_constraintTop_toBottomOf="@id/contentTv"
         app:srcCompat="@drawable/ic_baseline_thumb_up_alt_24" />
 
     <TextView
@@ -64,18 +76,20 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="0"
-        app:layout_constraintEnd_toStartOf="@id/image_dislike"
-        app:layout_constraintTop_toBottomOf="@id/authorTv" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/dislikeBtn"
+        app:layout_constraintTop_toBottomOf="@id/contentTv" />
 
-    <ImageView
-        android:id="@+id/image_dislike"
+    <ImageButton
+        android:id="@+id/dislikeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@android:color/transparent"
-        app:layout_constraintEnd_toStartOf="@+id/dislikesTv"
-        app:layout_constraintTop_toBottomOf="@id/authorTv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/dislikesTv"
+        app:layout_constraintTop_toBottomOf="@id/contentTv"
         app:srcCompat="@drawable/ic_baseline_thumb_down_alt_24" />
 
     <TextView
@@ -84,18 +98,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:text="0"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/authorTv" />
+        app:layout_constraintTop_toBottomOf="@id/contentTv"
+        tools:text="0" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/container_author"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_dislike"
-        tools:listitem="@layout/item_post" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
