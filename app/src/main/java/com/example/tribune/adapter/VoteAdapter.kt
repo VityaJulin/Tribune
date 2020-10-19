@@ -33,7 +33,7 @@ class VoteViewHolder(val adapter: VoteAdapter, view: View) : RecyclerView.ViewHo
 
     fun bind(post: PostModel) {
         with(itemView) {
-            vote_username.text = "Netology"
+            vote_username.text =  post.ownerName.toString()
         }
     }
 }

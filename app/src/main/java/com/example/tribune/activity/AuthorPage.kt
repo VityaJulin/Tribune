@@ -10,13 +10,13 @@ import com.example.tribune.R
 import com.example.tribune.Repository
 import com.example.tribune.adapter.PostAdapter
 import kotlinx.android.synthetic.main.activity_author_page.*
-import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.coroutines.launch
 import splitties.activities.start
 import splitties.toast.toast
 
 class AuthorPage : AppCompatActivity(),
-    PostAdapter.OnLikeBtnClickListener, PostAdapter.OnDislikeBtnClickListener, PostAdapter.OnStatisticBtnClicklistener  {
+    PostAdapter.OnLikeBtnClickListener, PostAdapter.OnDislikeBtnClickListener,
+    PostAdapter.OnStatisticBtnClicklistener {
 
     private var dialog: ProgressDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
