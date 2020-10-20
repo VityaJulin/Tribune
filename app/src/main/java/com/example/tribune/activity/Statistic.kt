@@ -8,15 +8,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.R
 import com.example.tribune.Repository
-import com.example.tribune.adapter.PostAdapter
 import com.example.tribune.adapter.VoteAdapter
-import kotlinx.android.synthetic.main.activity_author_page.*
+import com.example.tribune.userId
 import kotlinx.android.synthetic.main.activity_statistic.*
 import kotlinx.coroutines.launch
 import splitties.toast.toast
 
 class Statistic : AppCompatActivity() {
     private var dialog: ProgressDialog? = null
+    private var userId = intent.userId
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,7 @@ class Statistic : AppCompatActivity() {
                 setProgressBarIndeterminate(true)
                 show()
             }
-            val result = Repository.getPosts()
+            val result = Repository.getPostsByUserId(userId)
             dialog?.dismiss()
             if (result.isSuccessful) {
                 with(container_statistic) {

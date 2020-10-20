@@ -9,6 +9,7 @@ import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.R
 import com.example.tribune.Repository
 import com.example.tribune.adapter.PostAdapter
+import com.example.tribune.userId
 import kotlinx.android.synthetic.main.activity_author_page.*
 import kotlinx.coroutines.launch
 import splitties.activities.start
@@ -19,6 +20,8 @@ class AuthorPage : AppCompatActivity(),
     PostAdapter.OnStatisticBtnClicklistener {
 
     private var dialog: ProgressDialog? = null
+    private var userId = intent.userId
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_author_page)
@@ -38,7 +41,7 @@ class AuthorPage : AppCompatActivity(),
                 setProgressBarIndeterminate(true)
                 show()
             }
-            val result = Repository.getPosts()
+            val result = Repository.getPostsByUserId(userId)
             dialog?.dismiss()
             if (result.isSuccessful) {
                 with(container_author) {
@@ -49,6 +52,8 @@ class AuthorPage : AppCompatActivity(),
                         likeBtnClickListener = this@AuthorPage
                         dislikeBtnClickListener = this@AuthorPage
                         statisticBtnClickListener = this@AuthorPage
+                        authorTv.text = "1"
+                        badgeTv.text = "2"
                     }
                 }
             } else {

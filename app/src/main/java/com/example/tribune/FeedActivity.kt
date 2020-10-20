@@ -18,6 +18,7 @@ import splitties.toast.toast
 class FeedActivity : AppCompatActivity(),
     PostAdapter.OnLikeBtnClickListener, PostAdapter.OnDislikeBtnClickListener,
     PostAdapter.OnAvatarBtnClickListener, PostAdapter.OnStatisticBtnClicklistener {
+
     private var dialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +43,7 @@ class FeedActivity : AppCompatActivity(),
                 show()
             }
             val result = Repository.getPosts()
+
             dialog?.dismiss()
             if (result.isSuccessful) {
                 with(container) {
@@ -103,13 +105,17 @@ class FeedActivity : AppCompatActivity(),
 
     override fun onAvatarBtnClicked(item: PostModel, position: Int) {
         lifecycleScope.launch {
-            start<AuthorPage>()
+            val intent = Intent(this@FeedActivity, AuthorPage::class.java)
+            intent.userId = item.ownerId
+            startActivity(intent)
         }
     }
 
     override fun onStatisticBtnCliked(item: PostModel, position: Int) {
         lifecycleScope.launch {
-            start<Statistic>()
+            val intent = Intent(this@FeedActivity, Statistic::class.java)
+            intent.userId = item.ownerId
+            startActivity(intent)
         }
     }
 

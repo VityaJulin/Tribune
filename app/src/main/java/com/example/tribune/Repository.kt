@@ -74,4 +74,6 @@ object Repository {
 
     suspend fun  dislikedByMe(id: Long) = API.dislikedByMe(id)
 
+    suspend fun getPostsByUserId(userId: Long) = API.getPostsByUserId(userId)
+
 }
