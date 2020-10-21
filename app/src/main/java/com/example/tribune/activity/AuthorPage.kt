@@ -42,9 +42,9 @@ class AuthorPage : AppCompatActivity(),
                 show()
             }
             val result = Repository.getPostsByUserId(userId)
-            //val authorInfo = Repository.
+            val authorInfo = Repository.getUserById(userId)
             dialog?.dismiss()
-            if (result.isSuccessful) {
+            if (result.isSuccessful || authorInfo.isSuccessful) {
                 with(container_author) {
                     layoutManager = LinearLayoutManager(this@AuthorPage)
                     adapter = PostAdapter(
@@ -53,8 +53,12 @@ class AuthorPage : AppCompatActivity(),
                         likeBtnClickListener = this@AuthorPage
                         dislikeBtnClickListener = this@AuthorPage
                         statisticBtnClickListener = this@AuthorPage
-                        authorTv.text = "1"
-                        badgeTv.text = "2"
+                        authorTv.text = authorInfo.body()!!.username
+                        if(authorInfo.body()!!.isReadOnly) {
+                            badgeTv.text = "Read only!"
+                        } else {
+                            badgeTv.text = "Author"
+                        }
                     }
                 }
             } else {
