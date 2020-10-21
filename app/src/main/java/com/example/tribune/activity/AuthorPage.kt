@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.R
 import com.example.tribune.Repository
+import com.example.tribune.USER_ID
 import com.example.tribune.adapter.PostAdapter
-import com.example.tribune.userId
 import kotlinx.android.synthetic.main.activity_author_page.*
 import kotlinx.coroutines.launch
 import splitties.activities.start
@@ -20,12 +20,12 @@ class AuthorPage : AppCompatActivity(),
     PostAdapter.OnStatisticBtnClicklistener {
 
     private var dialog: ProgressDialog? = null
-    private var userId = intent.userId
+    private var userId = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_author_page)
-
+        userId = intent.getLongExtra(USER_ID, 0L)
         avatarBtn_author.setOnClickListener {
             toast("Change image")
         }
@@ -41,7 +41,7 @@ class AuthorPage : AppCompatActivity(),
                 setProgressBarIndeterminate(true)
                 show()
             }
-            val result = Repository.getPostsByUserId(userId)
+            val result = Repository.getPosts()
             dialog?.dismiss()
             if (result.isSuccessful) {
                 with(container_author) {

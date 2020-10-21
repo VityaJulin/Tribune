@@ -8,19 +8,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.R
 import com.example.tribune.Repository
+import com.example.tribune.USER_ID
 import com.example.tribune.adapter.VoteAdapter
-import com.example.tribune.userId
 import kotlinx.android.synthetic.main.activity_statistic.*
 import kotlinx.coroutines.launch
 import splitties.toast.toast
 
 class Statistic : AppCompatActivity() {
     private var dialog: ProgressDialog? = null
-    private var userId = intent.userId
+    private var userId = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistic)
+        userId = intent.getLongExtra(USER_ID, 0L)
     }
 
     override fun onStart() {

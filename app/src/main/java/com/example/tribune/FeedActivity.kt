@@ -106,7 +106,7 @@ class FeedActivity : AppCompatActivity(),
     override fun onAvatarBtnClicked(item: PostModel, position: Int) {
         lifecycleScope.launch {
             val intent = Intent(this@FeedActivity, AuthorPage::class.java)
-            intent.userId = item.ownerId
+            intent.putExtra(USER_ID, item.ownerId)
             startActivity(intent)
         }
     }
@@ -114,7 +114,7 @@ class FeedActivity : AppCompatActivity(),
     override fun onStatisticBtnCliked(item: PostModel, position: Int) {
         lifecycleScope.launch {
             val intent = Intent(this@FeedActivity, Statistic::class.java)
-            intent.userId = item.ownerId
+            intent.putExtra(USER_ID, item.ownerId)
             startActivity(intent)
         }
     }

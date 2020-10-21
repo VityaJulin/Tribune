@@ -66,5 +66,4 @@ interface API {
     suspend fun getPostsByUserId(@Path("id") userId: Long): Response<List<PostModel>>
 
 
-
 }
