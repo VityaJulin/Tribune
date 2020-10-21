@@ -76,4 +76,6 @@ object Repository {
 
     suspend fun getPostsByUserId(userId: Long) = API.getPostsByUserId(userId)
 
+    suspend fun getUserById(userId: Long) = API.getUserById(userId)
+
 }

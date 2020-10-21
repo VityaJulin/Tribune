@@ -42,6 +42,7 @@ class AuthorPage : AppCompatActivity(),
                 show()
             }
             val result = Repository.getPostsByUserId(userId)
+            //val authorInfo = Repository.
             dialog?.dismiss()
             if (result.isSuccessful) {
                 with(container_author) {

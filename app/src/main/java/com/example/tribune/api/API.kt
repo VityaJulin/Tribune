@@ -1,6 +1,7 @@
 package com.example.tribune.api
 
 import com.example.android_krud_app.dto.PostModel
+import com.example.tribune.dto.UserModel
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -65,5 +66,6 @@ interface API {
     @GET("api/v1/posts/user/{id}")
     suspend fun getPostsByUserId(@Path("id") userId: Long): Response<List<PostModel>>
 
-
+    @GET("api/v1/me/users/{id}")
+    suspend fun getUserById(@Path("id") userId: Long): Response<UserModel>
 }
