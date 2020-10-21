@@ -41,7 +41,7 @@ class AuthorPage : AppCompatActivity(),
                 setProgressBarIndeterminate(true)
                 show()
             }
-            val result = Repository.getPosts()
+            val result = Repository.getPostsByUserId(userId)
             dialog?.dismiss()
             if (result.isSuccessful) {
                 with(container_author) {
