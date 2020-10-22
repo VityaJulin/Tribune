@@ -1,14 +1,21 @@
 package com.example.tribune
 
+import android.graphics.Bitmap
+import com.example.android_krud_app.dto.AttachmentModel
 import com.example.tribune.api.API
 import com.example.tribune.api.AuthRequestParams
 import com.example.tribune.api.CreatePostRequest
 import com.example.tribune.api.RegistrationRequestParams
 import com.example.tribune.api.interceptor.InjectAuthTokenInterceptor
+import okhttp3.MediaType
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.ByteArrayOutputStream
 
 
 object Repository {
@@ -77,5 +84,15 @@ object Repository {
     suspend fun getPostsByUserId(userId: Long) = API.getPostsByUserId(userId)
 
     suspend fun getUserById(userId: Long) = API.getUserById(userId)
+
+    suspend fun upload(bitmap: Bitmap): Response<AttachmentModel> {
+        val bos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+        val reqFIle =
+            RequestBody.create(MediaType.parse("image/jpeg"), bos.toByteArray())
+        val body =
+            MultipartBody.Part.createFormData("file", "image.jpg", reqFIle)
+        return API.uploadImage(body)
+    }
 
 }

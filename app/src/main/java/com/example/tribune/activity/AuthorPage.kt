@@ -1,19 +1,21 @@
 package com.example.tribune.activity
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android_krud_app.dto.AttachmentModel
 import com.example.android_krud_app.dto.PostModel
-import com.example.tribune.R
-import com.example.tribune.Repository
-import com.example.tribune.USER_ID
+import com.example.tribune.*
 import com.example.tribune.adapter.PostAdapter
 import kotlinx.android.synthetic.main.activity_author_page.*
 import kotlinx.coroutines.launch
 import splitties.activities.start
 import splitties.toast.toast
+import java.io.IOException
 
 class AuthorPage : AppCompatActivity(),
     PostAdapter.OnLikeBtnClickListener, PostAdapter.OnDislikeBtnClickListener,
@@ -21,13 +23,14 @@ class AuthorPage : AppCompatActivity(),
 
     private var dialog: ProgressDialog? = null
     private var userId = 0L
+    private var attachmentModel: AttachmentModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_author_page)
         userId = intent.getLongExtra(USER_ID, 0L)
         avatarBtn_author.setOnClickListener {
-            toast("Change image")
+            takePictureIntent()
         }
     }
 
@@ -54,7 +57,7 @@ class AuthorPage : AppCompatActivity(),
                         dislikeBtnClickListener = this@AuthorPage
                         statisticBtnClickListener = this@AuthorPage
                         authorTv.text = authorInfo.body()!!.username
-                        if(authorInfo.body()!!.isReadOnly) {
+                        if (authorInfo.body()!!.isReadOnly) {
                             badgeTv.text = "Read only!"
                         } else {
                             badgeTv.text = "Author"
@@ -109,8 +112,43 @@ class AuthorPage : AppCompatActivity(),
 
     override fun onStatisticBtnCliked(item: PostModel, position: Int) {
         lifecycleScope.launch {
-            start<Statistic>()
+            val intent = Intent(this@AuthorPage, Statistic::class.java)
+            intent.putExtra(USER_ID, item.ownerId)
+            startActivity(intent)
         }
     }
 
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int, data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            val imageBitmap = data?.bitmap
+
+            lifecycleScope.launch {
+                try {
+                    val imageUploadResult = Repository.upload(imageBitmap!!)
+                    if (imageUploadResult.isSuccessful) {
+                        attachmentModel = imageUploadResult.body()
+                    } else {
+                        toast("upload error")
+                    }
+                } catch (e: IOException) {
+                    toast("image loading error")
+                }
+
+            }
+        }
+    }
+
+
+    private fun takePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
+        }
+    }
 }
+

@@ -1,7 +1,9 @@
 package com.example.tribune.api
 
+import com.example.android_krud_app.dto.AttachmentModel
 import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.dto.UserModel
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -68,4 +70,8 @@ interface API {
 
     @GET("api/v1/me/users/{id}")
     suspend fun getUserById(@Path("id") userId: Long): Response<UserModel>
+
+    @Multipart
+    @POST("api/v1/media")
+    suspend fun uploadImage(@Part file: MultipartBody.Part): Response<AttachmentModel>
 }
