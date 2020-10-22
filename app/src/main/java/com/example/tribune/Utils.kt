@@ -1,5 +1,8 @@
 package com.example.tribune
 
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+
 /**
  * Minimum is 6 chars. Should be at least one capital letter. Allow only english characters and
  * numbers
@@ -26,6 +29,12 @@ fun getTimeAgo(create: Int): String {
             "posted $hour hour $minutes minutes ago"
         }
     }
+}
+
+fun ImageView.loadImage(url: String) {
+    Glide.with(context)
+        .load(url)
+        .into(this)
 }
 
 

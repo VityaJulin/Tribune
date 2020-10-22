@@ -2,6 +2,7 @@ package com.example.tribune.activity
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
@@ -12,8 +13,9 @@ import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.*
 import com.example.tribune.adapter.PostAdapter
 import kotlinx.android.synthetic.main.activity_author_page.*
+import kotlinx.android.synthetic.main.activity_author_page.view.*
 import kotlinx.coroutines.launch
-import splitties.activities.start
+import splitties.resources.drawable
 import splitties.toast.toast
 import java.io.IOException
 
@@ -24,6 +26,7 @@ class AuthorPage : AppCompatActivity(),
     private var dialog: ProgressDialog? = null
     private var userId = 0L
     private var attachmentModel: AttachmentModel? = null
+    private var bitmap = R.drawable.ic_avatar_48dp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +50,7 @@ class AuthorPage : AppCompatActivity(),
             val result = Repository.getPostsByUserId(userId)
             val authorInfo = Repository.getUserById(userId)
             dialog?.dismiss()
-            if (result.isSuccessful || authorInfo.isSuccessful) {
+            if (result.isSuccessful && authorInfo.isSuccessful) {
                 with(container_author) {
                     layoutManager = LinearLayoutManager(this@AuthorPage)
                     adapter = PostAdapter(
@@ -61,6 +64,11 @@ class AuthorPage : AppCompatActivity(),
                             badgeTv.text = "Read only!"
                         } else {
                             badgeTv.text = "Author"
+                        }
+                        if (authorInfo.body()!!.avatar != null) {
+                            avatarBtn_author.loadImage(authorInfo.body()!!.avatar!!.url)
+                        } else {
+                            avatarBtn_author.setImageResource(R.drawable.ic_avatar_48dp)
                         }
                     }
                 }
@@ -118,26 +126,23 @@ class AuthorPage : AppCompatActivity(),
         }
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int, data: Intent?
-    ) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val imageBitmap = data?.bitmap
 
+        if (requestCode == REQUEST_IMAGE_CAPTURE && data != null) {
+            val imageBitmap = data.getParcelableExtra<Bitmap>("data")
             lifecycleScope.launch {
                 try {
                     val imageUploadResult = Repository.upload(imageBitmap!!)
                     if (imageUploadResult.isSuccessful) {
                         attachmentModel = imageUploadResult.body()
+                        avatarBtn_author.setImageBitmap(imageBitmap)
                     } else {
                         toast("upload error")
                     }
                 } catch (e: IOException) {
                     toast("image loading error")
                 }
-
             }
         }
     }
@@ -151,4 +156,5 @@ class AuthorPage : AppCompatActivity(),
         }
     }
 }
+
 
