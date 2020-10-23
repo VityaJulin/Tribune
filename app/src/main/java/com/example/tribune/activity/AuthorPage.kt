@@ -15,7 +15,6 @@ import com.example.tribune.adapter.PostAdapter
 import kotlinx.android.synthetic.main.activity_author_page.*
 import kotlinx.android.synthetic.main.activity_author_page.view.*
 import kotlinx.coroutines.launch
-import splitties.resources.drawable
 import splitties.toast.toast
 import java.io.IOException
 
