@@ -13,7 +13,6 @@ import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.*
 import com.example.tribune.adapter.PostAdapter
 import kotlinx.android.synthetic.main.activity_author_page.*
-import kotlinx.android.synthetic.main.activity_author_page.view.*
 import kotlinx.coroutines.launch
 import splitties.toast.toast
 import java.io.IOException
