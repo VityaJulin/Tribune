@@ -2,6 +2,7 @@ package com.example.tribune.api
 
 import com.example.android_krud_app.dto.AttachmentModel
 import com.example.android_krud_app.dto.PostModel
+import com.example.tribune.dto.ReactionModel
 import com.example.tribune.dto.UserModel
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -74,4 +75,7 @@ interface API {
     @Multipart
     @POST("api/v1/media")
     suspend fun uploadImage(@Part file: MultipartBody.Part): Response<AttachmentModel>
+
+    @GET("api/v1/posts/reactions/{id}")
+    suspend fun getReactionsById(@Path("id") id: Long): Response<List<ReactionModel>>
 }

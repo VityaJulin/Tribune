@@ -95,4 +95,6 @@ object Repository {
         return API.uploadImage(body)
     }
 
+    suspend fun getReactionsById(postId: Long) = API.getReactionsById(postId)
+
 }
