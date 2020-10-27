@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "574388785138",
+    "firebase_url": "https://tribune-99a49.firebaseio.com",
+    "project_id": "tribune-99a49",
+    "storage_bucket": "tribune-99a49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:574388785138:android:a07e49e13220706539a56b",
+        "android_client_info": {
+          "package_name": "com.example.tribune"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "574388785138-mli17l92v7dsroirm2ojq1uue96ir0n7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUnvyhiMA6enD6J0Eqn2dDsGlWaeKMKE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "574388785138-mli17l92v7dsroirm2ojq1uue96ir0n7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
