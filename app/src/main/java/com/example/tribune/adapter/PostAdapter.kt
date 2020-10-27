@@ -105,11 +105,11 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
             dislikesTv.text = post.dislikes.toString()
             createdTv.text = getTimeAgo(post.created)
 
-            if (post.author.avatar != null) {
+            /*if (post.author.avatar != null) {
                 avatarBtn_item.loadImage(post.author.avatar!!.url)
             } else {
                 avatarBtn_item.setImageResource(R.drawable.ic_avatar_48dp)
-            }
+            }*/
 
             if (post.likeActionPerforming) {
                 likeBtn.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)

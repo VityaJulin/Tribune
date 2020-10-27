@@ -10,6 +10,9 @@ import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.activity.AuthorPage
 import com.example.tribune.activity.Statistic
 import com.example.tribune.adapter.PostAdapter
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.coroutines.launch
 import splitties.activities.start
@@ -30,6 +33,7 @@ class FeedActivity : AppCompatActivity(),
         swipeContainer.setOnRefreshListener {
             refreshData()
         }
+        requestToken()
     }
 
     override fun onStart() {
@@ -126,6 +130,30 @@ class FeedActivity : AppCompatActivity(),
             if (newData.isSuccessful) {
                 container.adapter = PostAdapter(newData.body()!! as MutableList<PostModel>)
                 container.adapter?.notifyDataSetChanged()
+            }
+        }
+    }
+
+    private fun requestToken() {
+        with(GoogleApiAvailability.getInstance()) {
+            val code = isGooglePlayServicesAvailable(this@FeedActivity)
+            if (code == ConnectionResult.SUCCESS) {
+                return@with
+            }
+
+            if (isUserResolvableError(code)) {
+                getErrorDialog(this@FeedActivity, code, 9000).show()
+                return
+            }
+
+            feed.longSnackbar(getString(R.string.google_play_unavailable))
+            return
+        }
+
+        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+            lifecycleScope.launch {
+                println(it.token)
+//                Repository.registerPushToken(it.token)
             }
         }
     }
