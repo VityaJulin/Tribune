@@ -5,9 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android_krud_app.dto.AttachmentType
 import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.R
 import com.example.tribune.getTimeAgo
+import com.example.tribune.loadImage
 import kotlinx.android.synthetic.main.item_post.view.*
 import splitties.toast.toast
 
@@ -102,7 +104,12 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
             likesTv.text = post.likes.toString()
             dislikesTv.text = post.dislikes.toString()
             createdTv.text = getTimeAgo(post.created)
-            avatarBtn_item.setImageResource(R.drawable.ic_avatar_48dp)
+
+            if (post.author.avatar != null) {
+                avatarBtn_item.loadImage(post.author.avatar!!.url)
+            } else {
+                avatarBtn_item.setImageResource(R.drawable.ic_avatar_48dp)
+            }
 
             if (post.likeActionPerforming) {
                 likeBtn.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)
