@@ -18,15 +18,22 @@ import kotlinx.coroutines.launch
 import splitties.activities.start
 import splitties.toast.toast
 
-class FeedActivity : AppCompatActivity(),
+class FeedActivity : AppCompatActivity(R.layout.activity_feed),
     PostAdapter.OnLikeBtnClickListener, PostAdapter.OnDislikeBtnClickListener,
     PostAdapter.OnAvatarBtnClickListener, PostAdapter.OnStatisticBtnClicklistener {
 
     private var dialog: ProgressDialog? = null
+    private val adapter = PostAdapter(
+        likeBtnClickListener = this,
+        dislikeBtnClickListener = this,
+        avatarBtnClickListener = this,
+        statisticBtnClickListener = this
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_feed)
+        container.adapter = adapter
+        container.layoutManager = LinearLayoutManager(this)
         fab.setOnClickListener {
             start<CreatePostActivity>()
         }
@@ -50,17 +57,7 @@ class FeedActivity : AppCompatActivity(),
 
             dialog?.dismiss()
             if (result.isSuccessful) {
-                with(container) {
-                    layoutManager = LinearLayoutManager(this@FeedActivity)
-                    adapter = PostAdapter(
-                        (result.body() ?: emptyList()) as MutableList<PostModel>
-                    ).apply {
-                        likeBtnClickListener = this@FeedActivity
-                        dislikeBtnClickListener = this@FeedActivity
-                        avatarBtnClickListener = this@FeedActivity
-                        statisticBtnClickListener = this@FeedActivity
-                    }
-                }
+                adapter.submitList(result.body())
             } else {
                 toast(R.string.error_occured)
             }
@@ -128,8 +125,7 @@ class FeedActivity : AppCompatActivity(),
             val newData = Repository.getRecent()
             swipeContainer.isRefreshing = false
             if (newData.isSuccessful) {
-                container.adapter = PostAdapter(newData.body()!! as MutableList<PostModel>)
-                container.adapter?.notifyDataSetChanged()
+                adapter.submitList(newData.body())
             }
         }
     }

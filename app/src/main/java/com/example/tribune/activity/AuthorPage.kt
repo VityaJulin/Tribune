@@ -17,18 +17,24 @@ import kotlinx.coroutines.launch
 import splitties.toast.toast
 import java.io.IOException
 
-class AuthorPage : AppCompatActivity(),
+class AuthorPage : AppCompatActivity(R.layout.activity_author_page),
     PostAdapter.OnLikeBtnClickListener, PostAdapter.OnDislikeBtnClickListener,
     PostAdapter.OnStatisticBtnClicklistener {
 
     private var dialog: ProgressDialog? = null
     private var userId = 0L
     private var attachmentModel: AttachmentModel? = null
-    private var bitmap = R.drawable.ic_avatar_48dp
+    private val adapter = PostAdapter(
+        likeBtnClickListener = this,
+        dislikeBtnClickListener = this,
+        avatarBtnClickListener = { _, _ -> },
+        statisticBtnClickListener = this
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_author_page)
+        container_author.adapter = adapter
+        container_author.layoutManager = LinearLayoutManager(this)
         userId = intent.getLongExtra(USER_ID, 0L)
         avatarBtn_author.setOnClickListener {
             takePictureIntent()
@@ -49,26 +55,17 @@ class AuthorPage : AppCompatActivity(),
             val authorInfo = Repository.getUserById(userId)
             dialog?.dismiss()
             if (result.isSuccessful && authorInfo.isSuccessful) {
-                with(container_author) {
-                    layoutManager = LinearLayoutManager(this@AuthorPage)
-                    adapter = PostAdapter(
-                        (result.body() ?: emptyList()) as MutableList<PostModel>
-                    ).apply {
-                        likeBtnClickListener = this@AuthorPage
-                        dislikeBtnClickListener = this@AuthorPage
-                        statisticBtnClickListener = this@AuthorPage
-                        authorTv.text = authorInfo.body()!!.username
-                        if (authorInfo.body()!!.isReadOnly) {
-                            badgeTv.text = "Read only!"
-                        } else {
-                            badgeTv.text = "Author"
-                        }
-                        if (authorInfo.body()!!.avatar != null) {
-                            avatarBtn_author.loadImage(authorInfo.body()!!.avatar!!.url)
-                        } else {
-                            avatarBtn_author.setImageResource(R.drawable.ic_avatar_48dp)
-                        }
-                    }
+                adapter.submitList(result.body())
+                authorTv.text = authorInfo.body()?.username
+                if (authorInfo.body()?.isReadOnly == true) {
+                    badgeTv.text = "Read only!"
+                } else {
+                    badgeTv.text = "Author"
+                }
+                if (authorInfo.body()!!.avatar != null) {
+                    avatarBtn_author.loadImage(authorInfo.body()!!.avatar!!.url)
+                } else {
+                    avatarBtn_author.setImageResource(R.drawable.ic_avatar_48dp)
                 }
             } else {
                 toast(R.string.error_occured)
