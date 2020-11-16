@@ -149,7 +149,7 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
             lifecycleScope.launch {
                 println(it.token)
-//                Repository.registerPushToken(it.token)
+                Repository.registerPushToken(it.token)
             }
         }
     }

@@ -2,6 +2,7 @@ package com.example.tribune.api
 
 import com.example.android_krud_app.dto.AttachmentModel
 import com.example.android_krud_app.dto.PostModel
+import com.example.tribune.dto.PushRequestParamsDto
 import com.example.tribune.dto.ReactionModel
 import com.example.tribune.dto.UserModel
 import okhttp3.MultipartBody
@@ -78,4 +79,7 @@ interface API {
 
     @GET("api/v1/posts/reactions/{id}")
     suspend fun getReactionsById(@Path("id") id: Long): Response<List<ReactionModel>>
+
+    @POST("api/v1/token")
+    suspend fun registerPushToken(@Body params: PushRequestParamsDto): Response<Void>
 }

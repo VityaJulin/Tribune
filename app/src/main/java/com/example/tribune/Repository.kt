@@ -7,6 +7,7 @@ import com.example.tribune.api.AuthRequestParams
 import com.example.tribune.api.CreatePostRequest
 import com.example.tribune.api.RegistrationRequestParams
 import com.example.tribune.api.interceptor.InjectAuthTokenInterceptor
+import com.example.tribune.dto.PushRequestParamsDto
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -97,4 +98,6 @@ object Repository {
 
     suspend fun getReactionsById(postId: Long) = API.getReactionsById(postId)
 
+    suspend fun registerPushToken(token: String) =
+        API.registerPushToken(PushRequestParamsDto(token))
 }
