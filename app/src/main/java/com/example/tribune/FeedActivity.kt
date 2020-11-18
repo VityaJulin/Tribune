@@ -54,10 +54,18 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
                 show()
             }
             val result = Repository.getPosts()
+            /*val resultSize = result.body()?.size
+            when (resultSize) {
+                in 1..20 -> resultSize
+                else -> POSTS_ON_PAGE_COUNT
+            }*/
 
             dialog?.dismiss()
             if (result.isSuccessful) {
-                adapter.submitList(result.body())
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    adapter.submitList(result.body()
+                        ?.subList(Integer.max(result.body()!!.lastIndex - 19, 0), result.body()!!.size))
+                }
             } else {
                 toast(R.string.error_occured)
             }
