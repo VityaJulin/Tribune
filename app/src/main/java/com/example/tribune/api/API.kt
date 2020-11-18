@@ -74,7 +74,7 @@ interface API {
     suspend fun getUserById(@Path("id") userId: Long): Response<UserModel>
 
     @Multipart
-    @POST("api/v1/media")
+    @POST("api/v1/me/media")
     suspend fun uploadImage(@Part file: MultipartBody.Part): Response<AttachmentModel>
 
     @GET("api/v1/posts/reactions/{id}")

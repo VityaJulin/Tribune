@@ -128,7 +128,7 @@ class AuthorPage : AppCompatActivity(R.layout.activity_author_page),
             val imageBitmap = data.getParcelableExtra<Bitmap>("data")
             lifecycleScope.launch {
                 try {
-                    val imageUploadResult = Repository.upload(imageBitmap!!)
+                    val imageUploadResult = Repository.upload(imageBitmap)
                     if (imageUploadResult.isSuccessful) {
                         attachmentModel = imageUploadResult.body()
                         avatarBtn_author.setImageBitmap(imageBitmap)
