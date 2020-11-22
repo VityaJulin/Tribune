@@ -125,7 +125,7 @@ class AuthorPage : AppCompatActivity(R.layout.activity_author_page),
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && data != null) {
-            val imageBitmap = data.getParcelableExtra<Bitmap>("data")
+            val imageBitmap = data.getParcelableExtra<Bitmap>("data") ?: return
             lifecycleScope.launch {
                 try {
                     val imageUploadResult = Repository.upload(imageBitmap)

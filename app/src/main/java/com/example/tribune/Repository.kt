@@ -9,9 +9,11 @@ import com.example.tribune.api.RegistrationRequestParams
 import com.example.tribune.api.interceptor.InjectAuthTokenInterceptor
 import com.example.tribune.dto.PushRequestParamsDto
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -89,8 +91,7 @@ object Repository {
     suspend fun upload(bitmap: Bitmap): Response<AttachmentModel> {
         val bos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
-        val reqFIle =
-            RequestBody.create(MediaType.parse("image/jpeg"), bos.toByteArray())
+        val reqFIle = bos.toByteArray().toRequestBody("image/jpeg".toMediaType())
         val body =
             MultipartBody.Part.createFormData("file", "image.jpg", reqFIle)
         return API.uploadImage(body)
