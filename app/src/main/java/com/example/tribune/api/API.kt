@@ -55,10 +55,10 @@ interface API {
     @POST("api/v1/posts/{id}/reposts")
     suspend fun repostedByMe(@Path("id") id: Long): Response<PostModel>
 
-    @GET("api/v1/posts/recent/after/{id}")
+    @GET("api/v1/posts/after/{id}")
     suspend fun getPostsAfter(@Path("id") id: Long): Response<List<PostModel>>
 
-    @GET("api/v1/posts/recent/before/{id}")
+    @GET("api/v1/posts/before/{id}")
     suspend fun getPostsBefore(@Path("id") id: Long): Response<List<PostModel>>
 
     @GET("api/v1/posts/recent")

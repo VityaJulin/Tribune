@@ -10,32 +10,70 @@ class PostAdapter(
     private val likeBtnClickListener: OnLikeBtnClickListener,
     private val dislikeBtnClickListener: OnDislikeBtnClickListener,
     private val avatarBtnClickListener: OnAvatarBtnClickListener,
-    private val statisticBtnClickListener: OnStatisticBtnClicklistener
-) : ListAdapter<PostModel, PostViewHolder>(PostDiffer) {
+    private val statisticBtnClickListener: OnStatisticBtnClicklistener,
+    private val retryPageClickListener: () -> Unit
+) : ListAdapter<FeedModel, PostViewHolder>(PostDiffer) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val postView =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_post, parent, false)
-        return PostViewHolder(
-            likeClickListener = {
-                likeBtnClickListener.onLikeBtnClicked(getItem(it), it)
-            },
-            dislikeClickListener = {
-                dislikeBtnClickListener.onDislikeBtnClicked(getItem(it), it)
-            },
-            avatarClickListener = {
-                avatarBtnClickListener.onAvatarBtnClicked(getItem(it), it)
-            },
-            statisticClickListener = {
-                statisticBtnClickListener.onStatisticBtnCliked(getItem(it), it)
-            },
-            view = postView
-        )
+        val inflater = LayoutInflater.from(parent.context)
+        return when (viewType) {
+            PostViewHolder.Post.VIEW_TYPE -> PostViewHolder.Post(
+                likeClickListener = { position ->
+                    getPostOrNull(position)?.let {
+                        likeBtnClickListener.onLikeBtnClicked(it, position)
+                    }
+                },
+                dislikeClickListener = { position ->
+                    getPostOrNull(position)?.let {
+                        dislikeBtnClickListener.onDislikeBtnClicked(it, position)
+                    }
+                },
+                avatarClickListener = { position ->
+                    getPostOrNull(position)?.let {
+                        avatarBtnClickListener.onAvatarBtnClicked(it, position)
+                    }
+                },
+                statisticClickListener = { position ->
+                    getPostOrNull(position)?.let {
+                        statisticBtnClickListener.onStatisticBtnCliked(it, position)
+                    }
+                },
+                view = inflater.inflate(R.layout.item_post, parent, false)
+            )
+            PostViewHolder.ErrorViewHolder.VIEW_TYPE -> {
+                PostViewHolder.ErrorViewHolder(
+                    retryListener = retryPageClickListener,
+                    view = inflater.inflate(R.layout.item_error, parent, false)
+                )
+            }
+            PostViewHolder.ProgressViewHolder.VIEW_TYPE -> {
+                PostViewHolder.ProgressViewHolder(
+                    inflater.inflate(
+                        R.layout.item_progress,
+                        parent,
+                        false
+                    )
+                )
+            }
+            else -> error("Unknown view type $viewType")
+        }
     }
 
+    override fun getItemViewType(position: Int): Int =
+        when (getItem(position)) {
+            is FeedModel.Post -> PostViewHolder.Post.VIEW_TYPE
+            FeedModel.Error -> PostViewHolder.ErrorViewHolder.VIEW_TYPE
+            FeedModel.Progress -> PostViewHolder.ProgressViewHolder.VIEW_TYPE
+        }
+
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        if (holder is PostViewHolder.Post) {
+            getPostOrNull(position)?.let(holder::bind)
+        }
     }
+
+    private fun getPostOrNull(position: Int): PostModel? =
+        (getItem(position) as? FeedModel.Post)?.post
 
     fun interface OnLikeBtnClickListener {
         fun onLikeBtnClicked(item: PostModel, position: Int)

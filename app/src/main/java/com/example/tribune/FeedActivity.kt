@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.activity.AuthorPage
 import com.example.tribune.activity.Statistic
+import com.example.tribune.adapter.FeedModel
 import com.example.tribune.adapter.PostAdapter
 import com.example.tribune.middleware.*
 import com.example.tribune.mvi.Store
@@ -33,7 +34,12 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
         likeBtnClickListener = this,
         dislikeBtnClickListener = this,
         avatarBtnClickListener = this,
-        statisticBtnClickListener = this
+        statisticBtnClickListener = this,
+        retryPageClickListener = {
+            feedStore.state.value.posts.lastOrNull()?.id?.let {
+                feedStore.accept(FeedAction.RetryNextPage(it))
+            }
+        }
     )
 
     // Бизнес логика
@@ -103,26 +109,16 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
                 feedStore.accept(FeedAction.LoadNextPage(it))
             }
         }
+        feedStore.accept(FeedAction.LoadFirstPage)
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        feedStore.accept(FeedAction.Refresh)
     }
 
     override fun onLikeBtnClicked(item: PostModel, position: Int) {
-        lifecycleScope.launch {
-            item.likeActionPerforming = true
-            with(container) {
-                adapter?.notifyItemChanged(position)
-                if (item.likedByMe || item.dislikedByMe) {
-                    toast(R.string.error_double_vote)
-                } else {
-                    Repository.likedByMe(item.id)
-                    val response = Repository.likedByMe(item.id)
-                    if (response.isSuccessful) {
-                        item.updateLikes(response.body()!!)
-                    }
-                    adapter?.notifyItemChanged(position)
-                }
-                item.likeActionPerforming = false
-            }
-        }
+        feedStore.accept(FeedAction.Like(position))
     }
 
     override fun onDislikeBtnClicked(item: PostModel, position: Int) {
