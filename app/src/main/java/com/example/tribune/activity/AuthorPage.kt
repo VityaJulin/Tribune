@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_krud_app.dto.AttachmentModel
 import com.example.android_krud_app.dto.PostModel
 import com.example.tribune.*
+import com.example.tribune.adapter.FeedModel
 import com.example.tribune.adapter.PostAdapter
 import kotlinx.android.synthetic.main.activity_author_page.*
 import kotlinx.coroutines.launch
@@ -28,7 +29,8 @@ class AuthorPage : AppCompatActivity(R.layout.activity_author_page),
         likeBtnClickListener = this,
         dislikeBtnClickListener = this,
         avatarBtnClickListener = { _, _ -> },
-        statisticBtnClickListener = this
+        statisticBtnClickListener = this,
+        retryPageClickListener = {}
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +57,7 @@ class AuthorPage : AppCompatActivity(R.layout.activity_author_page),
             val authorInfo = Repository.getUserById(userId)
             dialog?.dismiss()
             if (result.isSuccessful && authorInfo.isSuccessful) {
-                adapter.submitList(result.body())
+                adapter.submitList(result.body()?.map { FeedModel.Post(it) })
                 authorTv.text = authorInfo.body()?.username
                 if (authorInfo.body()?.isReadOnly == true) {
                     badgeTv.text = "Read only!"
@@ -125,7 +127,7 @@ class AuthorPage : AppCompatActivity(R.layout.activity_author_page),
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && data != null) {
-            val imageBitmap = data.getParcelableExtra<Bitmap>("data")
+            val imageBitmap = data.getParcelableExtra<Bitmap>("data") ?: return
             lifecycleScope.launch {
                 try {
                     val imageUploadResult = Repository.upload(imageBitmap)
