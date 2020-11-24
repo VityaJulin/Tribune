@@ -86,6 +86,8 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
                 when {
                     state.nextPageLoading -> models + FeedModel.Progress
                     state.nextPageError -> models + FeedModel.Error
+                    state.emptyPageError-> models + FeedModel.Error
+                    state.emptyPageLoading -> models + FeedModel.Progress
                     else -> models
                 }
             )
@@ -98,8 +100,8 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
 
         feedStore.sideEffect.onEach {
             when (it) {
-                FeedSideEffect.RefreshError -> toast("Refresh error") // TODO Нормальный текст
-                FeedSideEffect.DoubleLikeError,
+                FeedSideEffect.RefreshError -> toast(R.string.refresh_error)
+                FeedSideEffect.DoubleLikeError -> toast(R.string.error_double_vote)
                 FeedSideEffect.DoubleDislikeError -> toast(R.string.error_double_vote)
             }
         }.launchIn(lifecycleScope)
