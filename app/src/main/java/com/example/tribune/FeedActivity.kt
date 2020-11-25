@@ -2,6 +2,8 @@ package com.example.tribune
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -52,7 +54,7 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
             RefreshMiddleware(Repository),
             RetryPageMiddleware(Repository),
             LikeMiddleware(Repository),
-            DislikeMiddleware(Repository),
+            DislikeMiddleware(Repository)
         ),
         sideEffects = listOf(
             RefreshSideEffect,
@@ -86,16 +88,17 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
                 when {
                     state.nextPageLoading -> models + FeedModel.Progress
                     state.nextPageError -> models + FeedModel.Error
-                    state.emptyPageError-> models + FeedModel.Error
-                    state.emptyPageLoading -> models + FeedModel.Progress
                     else -> models
                 }
             )
-            // TODO Остальные стэйты.
-            //  1. Ничего не загрузилось, произошла обшибка
-            //  2. Пустой экран, загрузка
-            //  Эти состояния нужно сверстать в activity_feed и менять у них видимость здесь
-            //  в зависимости от флагов emptyPageError и emptyPageLoading
+            when {
+                state.emptyPageError -> empty_page_message.visibility = VISIBLE
+                state.emptyPageLoading -> progress_horizontal.visibility = VISIBLE
+                else -> {
+                    empty_page_message.visibility = GONE
+                    progress_horizontal.visibility = GONE
+                }
+            }
         }.launchIn(lifecycleScope)
 
         feedStore.sideEffect.onEach {
