@@ -18,14 +18,17 @@ class FirstPageMiddleware(
             .map {
                 repository.getRecent().let {
                     if (it.isSuccessful) {
-                        FeedAction.FirstPageLoaded(it.body().orEmpty())
+                        val posts = it.body().orEmpty()
+                        if (posts.isNotEmpty()) {
+                            FeedAction.FirstPageLoaded(posts)
+                        } else {
+                            FeedAction.EmptyPage
+                        }
                     } else {
                         FeedAction.FirstPageError
                     }
                 }
             }.catch {
-                emit(
-                    FeedAction.FirstPageError
-                )
+                emit(FeedAction.FirstPageError)
             }
 }
