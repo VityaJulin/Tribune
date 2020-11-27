@@ -161,8 +161,7 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
             lifecycleScope.launch {
                 println(it.token)
-                // TODO На бэке создать запрос по сохранению пуш токена. Отправлять пуши автору, когда лайкают его пост. Сейчас возвращается 404
-                //Repository.registerPushToken(it.token)
+                Repository.registerPushToken(it.token)
             }
         }
     }

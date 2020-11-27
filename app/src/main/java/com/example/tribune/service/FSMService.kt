@@ -10,7 +10,6 @@ class FCMService : FirebaseMessagingService() {
 
         println(recipientId)
         println(title)
-        // TODO: show notification
     }
 
     override fun onNewToken(token: String) {
