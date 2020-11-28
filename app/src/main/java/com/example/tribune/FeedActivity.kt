@@ -2,9 +2,8 @@ package com.example.tribune
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_krud_app.dto.PostModel
@@ -20,7 +19,7 @@ import com.example.tribune.sideeffects.RefreshSideEffect
 import com.example.tribune.utils.doOnScrolledToBottom
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.installations.FirebaseInstallations
 import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -91,14 +90,10 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
                     else -> models
                 }
             )
-            when {
-                state.emptyPageError -> empty_page_message.visibility = VISIBLE
-                state.emptyPageLoading -> progress_horizontal.visibility = VISIBLE
-                else -> {
-                    empty_page_message.visibility = GONE
-                    progress_horizontal.visibility = GONE
-                }
-            }
+            empty_page_message.isVisible = state.emptyPage
+            progress_horizontal.isVisible = state.emptyPageLoading
+            // TODO Стэйт с кнопкой "Повторить" и сообщением
+            // По нажатию на "Повторить" позвать feedStore.accept(FeedAction.LoadFirstPage)
         }.launchIn(lifecycleScope)
 
         feedStore.sideEffect.onEach {
@@ -158,9 +153,8 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
             return
         }
 
-        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+        FirebaseInstallations.getInstance().getToken(false).addOnSuccessListener {
             lifecycleScope.launch {
-                println(it.token)
                 Repository.registerPushToken(it.token)
             }
         }
