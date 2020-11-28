@@ -27,4 +27,5 @@
     <string name="google_play_unavailable">Google Play services is unavailable</string>
     <string name="refresh_error">Refresh error</string>
     <string name="list_of_posts_is_empty">List of posts is empty!</string>
+    <string name="retry_btn">Retry</string>
 </resources>

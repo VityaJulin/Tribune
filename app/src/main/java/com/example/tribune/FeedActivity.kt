@@ -92,8 +92,10 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
             )
             empty_page_message.isVisible = state.emptyPage
             progress_horizontal.isVisible = state.emptyPageLoading
-            // TODO Стэйт с кнопкой "Повторить" и сообщением
-            // По нажатию на "Повторить" позвать feedStore.accept(FeedAction.LoadFirstPage)
+            retry_btn.isVisible = state.nextPageLoading
+            retry_btn.setOnClickListener {
+                feedStore.accept(FeedAction.LoadFirstPage)
+            }
         }.launchIn(lifecycleScope)
 
         feedStore.sideEffect.onEach {
