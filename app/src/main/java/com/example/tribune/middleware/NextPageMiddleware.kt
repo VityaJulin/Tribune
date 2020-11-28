@@ -19,18 +19,17 @@ class NextPageMiddleware(
                 if (state.value.lastPageLoaded) {
                     FeedAction.LastPageLoaded
                 } else {
-                    repository.getPostsBefore(action.lastPageId).let {
-                        if (it.isSuccessful) {
+                    repository.getPostsBefore(action.lastPageId).handleLogout(
+                        onSuccess = {
                             val posts = it.body().orEmpty()
                             if (posts.isEmpty()) {
                                 FeedAction.LastPageLoaded
                             } else {
                                 FeedAction.PageLoaded(posts)
                             }
-                        } else {
-                            FeedAction.NextPageError
-                        }
-                    }
+                        },
+                        onFailure = { FeedAction.NextPageError }
+                    )
                 }
             }.catch {
                 emit(FeedAction.NextPageError)

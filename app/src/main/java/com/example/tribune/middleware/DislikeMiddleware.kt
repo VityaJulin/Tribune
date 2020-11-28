@@ -22,8 +22,10 @@ class DislikeMiddleware(
                 if (post.likedByMe) {
                     return@map FeedAction.DoubleLike
                 }
-                repository.likedByMe(post.id).body()?.let(FeedAction::DislikeLoaded)
-                    ?: FeedAction.DislikeError(post.id)
+                repository.dislikedByMe(post.id).handleLogout(
+                    onSuccess = { FeedAction.DislikeLoaded(requireNotNull(it.body())) },
+                    onFailure = { FeedAction.DislikeError(post.id) }
+                )
             }.catch {
                 emit(FeedAction.DislikeError())
             }

@@ -7,7 +7,7 @@ import com.example.tribune.mvi.Middleware
 import kotlinx.coroutines.flow.*
 
 class RefreshMiddleware(
-    private val repository: Repository
+    private val repository: Repository,
 ) : Middleware<FeedAction, FeedState> {
 
     override fun transform(
@@ -16,13 +16,10 @@ class RefreshMiddleware(
     ): Flow<FeedAction> =
         actions.filterIsInstance<FeedAction.Refresh>()
             .map {
-                repository.getRecent().let {
-                    if (it.isSuccessful) {
-                        FeedAction.FirstPageLoaded(it.body().orEmpty())
-                    } else {
-                        FeedAction.RefreshError
-                    }
-                }
+                repository.getRecent().handleLogout(
+                    onSuccess = { FeedAction.FirstPageLoaded(it.body().orEmpty()) },
+                    onFailure = { FeedAction.RefreshError }
+                )
             }.catch {
                 emit(FeedAction.RefreshError)
             }

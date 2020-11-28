@@ -22,8 +22,10 @@ class LikeMiddleware(
                 if (post.likedByMe) {
                     return@map FeedAction.DoubleLike
                 }
-                repository.likedByMe(post.id).body()?.let(FeedAction::LikeLoaded)
-                    ?: FeedAction.LikeError(post.id)
+                repository.likedByMe(post.id).handleLogout(
+                    onSuccess = { FeedAction.LikeLoaded(requireNotNull(it.body())) },
+                    onFailure = { FeedAction.LikeError(post.id) }
+                )
             }.catch {
                 emit(FeedAction.LikeError())
             }

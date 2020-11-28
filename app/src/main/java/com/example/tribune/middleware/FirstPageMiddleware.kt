@@ -7,7 +7,7 @@ import com.example.tribune.mvi.Middleware
 import kotlinx.coroutines.flow.*
 
 class FirstPageMiddleware(
-    private val repository: Repository
+    private val repository: Repository,
 ) : Middleware<FeedAction, FeedState> {
 
     override fun transform(
@@ -16,18 +16,19 @@ class FirstPageMiddleware(
     ): Flow<FeedAction> =
         actions.filterIsInstance<FeedAction.LoadFirstPage>()
             .map {
-                repository.getRecent().let {
-                    if (it.isSuccessful) {
+                repository.getRecent().handleLogout(
+                    onSuccess = {
                         val posts = it.body().orEmpty()
                         if (posts.isNotEmpty()) {
                             FeedAction.FirstPageLoaded(posts)
                         } else {
                             FeedAction.EmptyPage
                         }
-                    } else {
+                    },
+                    onFailure = {
                         FeedAction.FirstPageError
                     }
-                }
+                )
             }.catch {
                 emit(FeedAction.FirstPageError)
             }

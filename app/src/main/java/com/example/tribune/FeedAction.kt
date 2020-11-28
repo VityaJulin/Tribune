@@ -24,6 +24,7 @@ sealed class FeedAction {
     data class FirstPageLoaded(val posts: List<PostModel>) : FeedAction()
     object EmptyPage : FeedAction()
     data class PageLoaded(val posts: List<PostModel>) : FeedAction()
+    object Logout : FeedAction()
 
     // Валидация
     object DoubleLike : FeedAction()

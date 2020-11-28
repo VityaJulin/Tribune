@@ -70,6 +70,7 @@ object FeedReducer : Reducer<FeedAction, FeedState> {
             }
             FeedAction.EmptyPage -> FeedState(emptyPage = true)
             FeedAction.RefreshError -> currentState.copy(refreshing = false)
+            FeedAction.Logout,
             FeedAction.DoubleLike,
             FeedAction.DoubleDislike -> currentState
         }
