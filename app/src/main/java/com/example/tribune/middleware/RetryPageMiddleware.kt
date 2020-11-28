@@ -7,7 +7,7 @@ import com.example.tribune.mvi.Middleware
 import kotlinx.coroutines.flow.*
 
 class RetryPageMiddleware(
-    private val repository: Repository
+    private val repository: Repository,
 ) : Middleware<FeedAction, FeedState> {
 
     @Suppress("EXPERIMENTAL_API_USAGE")
@@ -17,13 +17,10 @@ class RetryPageMiddleware(
     ): Flow<FeedAction> =
         actions.filterIsInstance<FeedAction.RetryNextPage>()
             .mapLatest { action ->
-                repository.getPostsAfter(action.lastPageId).let {
-                    if (it.isSuccessful) {
-                        FeedAction.PageLoaded(it.body().orEmpty())
-                    } else {
-                        FeedAction.NextPageError
-                    }
-                }
+                repository.getPostsAfter(action.lastPageId).handleLogout(
+                    onSuccess = { FeedAction.PageLoaded(it.body().orEmpty()) },
+                    onFailure = { FeedAction.NextPageError }
+                )
             }.catch {
                 emit(FeedAction.NextPageError)
             }

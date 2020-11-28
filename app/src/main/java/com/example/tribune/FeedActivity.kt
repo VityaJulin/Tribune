@@ -1,8 +1,10 @@
 package com.example.tribune
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +17,7 @@ import com.example.tribune.middleware.*
 import com.example.tribune.mvi.Store
 import com.example.tribune.sideeffects.DoubleDislikeSideEffect
 import com.example.tribune.sideeffects.DoubleLikeSideEffect
+import com.example.tribune.sideeffects.LogoutSideEffect
 import com.example.tribune.sideeffects.RefreshSideEffect
 import com.example.tribune.utils.doOnScrolledToBottom
 import com.google.android.gms.common.ConnectionResult
@@ -59,6 +62,7 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
             RefreshSideEffect,
             DoubleLikeSideEffect,
             DoubleDislikeSideEffect,
+            LogoutSideEffect,
         )
     )
 
@@ -92,7 +96,7 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
             )
             empty_page_message.isVisible = state.emptyPage
             progress_horizontal.isVisible = state.emptyPageLoading
-            retry_btn.isVisible = state.nextPageLoading
+            retry_btn.isVisible = state.emptyPageError
             retry_btn.setOnClickListener {
                 feedStore.accept(FeedAction.LoadFirstPage)
             }
@@ -103,6 +107,16 @@ class FeedActivity : AppCompatActivity(R.layout.activity_feed),
                 FeedSideEffect.RefreshError -> toast(R.string.refresh_error)
                 FeedSideEffect.DoubleLikeError -> toast(R.string.error_double_vote)
                 FeedSideEffect.DoubleDislikeError -> toast(R.string.error_double_vote)
+                FeedSideEffect.Logout -> {
+                    getSharedPreferences(API_SHARED_FILE, Context.MODE_PRIVATE).edit {
+                        remove(AUTHENTICATED_SHARED_KEY)
+                    }
+                    start<MainActivity> {
+                        addFlags(
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        )
+                    }
+                }
             }
         }.launchIn(lifecycleScope)
 
